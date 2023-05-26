@@ -1,5 +1,6 @@
-import Navbar from './(nav)/NavBar';
+import Navbar from '@/components/NavBar/NavBar';
 import './globals.css';
+import BodyWrapper from '@/components/layout/Body';
 
 export const metadata = {
   title: 'Joe McBroom',
@@ -12,11 +13,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang='en'>
-      <body className='h-screen'>
+    <html lang='en' className='h-full'>
+      <BodyWrapper>
         <Navbar />
-        <main className='pt-10'>{children}</main>
-      </body>
+        <main className='h-full pt-10 text-slate-50 sm:pt-0'>{children}</main>
+      </BodyWrapper>
     </html>
   );
 }

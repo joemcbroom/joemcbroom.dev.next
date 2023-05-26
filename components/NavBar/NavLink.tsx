@@ -17,7 +17,7 @@ const NavLink: React.FC<NavLinkProps> = ({
   return (
     <Link
       href={href}
-      className={`z-20 grid aspect-square place-items-center rounded-full p-2 delay-0 ${
+      className={`touch z-20 grid aspect-square place-items-center rounded-full p-2 delay-0 ${
         isActive ? backgroundClass : 'bg-transparent'
       }`}
       transition-style={isActive ? 'in:circle:hesitate' : ''}

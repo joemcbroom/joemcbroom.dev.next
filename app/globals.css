@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .bg-color-transition {
+    @apply transition-colors duration-500 delay-300
+  }
+}
+
+:root {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: transparent;
+}
+
 /* NavLink transitions */
 @keyframes circle-in-hesitate {
   0% {
@@ -13,10 +24,10 @@
   }
 
   100% {
-    clip-path: circle(175%);
+    clip-path: circle(125%);
   }
 }
 
 [transition-style="in:circle:hesitate"] {
-  animation: 2.5s cubic-bezier(.25, 1, .30, 1) circle-in-hesitate both;
+  animation: 2s cubic-bezier(.25, 1, .30, 1) circle-in-hesitate both;
 }
