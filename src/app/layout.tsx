@@ -1,7 +1,7 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import Nav from './_components/Nav';
+import Nav from '@/_components/nav/NavBar';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -16,12 +16,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang='en'>
+    <html lang='en' className=''>
       <body
         className={`${inter.className} relative bg-neutral-50 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-50`}
       >
         <Nav />
-        <main className='pt-6'>{children}</main>
+        <main className='mt-12'>{children}</main>
       </body>
     </html>
   );
