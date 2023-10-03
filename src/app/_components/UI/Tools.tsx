@@ -38,7 +38,7 @@ const Tools = () => {
             alt={name}
             className='aspect-square w-8 object-contain md:w-10 lg:w-16'
           />
-          <span className='text-sm text-neutral-600 dark:text-neutral-400'>
+          <span className='text-sm text-neutral-200 dark:text-neutral-500'>
             {name}
           </span>
         </div>

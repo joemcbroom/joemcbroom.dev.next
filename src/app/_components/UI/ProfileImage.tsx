@@ -13,12 +13,14 @@ const ProfileImage = () => {
   }, []);
 
   return (
-    <figure className='block-shadow relative mx-auto w-3/4 overflow-hidden rounded-t-full border-2 '>
+    <figure className='profile-image block-shadow relative mx-auto w-3/4 max-w-max rounded-t-full border-2 '>
       <Image
         ref={image}
         src={profileImage}
-        className='headshot grayscale transition-all duration-1000 ease-in-out hover:grayscale-0'
+        priority
+        className='headshot rounded-t-full grayscale transition-all delay-1000 duration-1000 ease-in-out hover:grayscale-0'
         alt='Picture of the Joe McBroom'
+        placeholder='blur'
       />
     </figure>
   );

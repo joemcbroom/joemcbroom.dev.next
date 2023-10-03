@@ -31,7 +31,7 @@ const NavLinks = () => {
     <ul className='relative flex flex-col items-center space-y-4 md:w-[15rem] md:flex-row md:gap-4 md:space-y-0'>
       {navLinks.map(({ name, path }) => {
         const isActive = pathname === path;
-        const { left } = navLinks.find((link) => link.path === pathname)!;
+        const { left } = navLinks.find((link) => link.path === pathname) || {};
         return (
           <Fragment key={name}>
             <span

@@ -21,7 +21,7 @@ export default function RootLayout({
         className={`${inter.className} relative bg-neutral-50 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-50`}
       >
         <Nav />
-        <main className='mt-12'>{children}</main>
+        <main className='mt-6 md:mt-12'>{children}</main>
       </body>
     </html>
   );

@@ -34,7 +34,7 @@ export default function HomePage() {
         </div>
       </section>
       <InverseWrapper>
-        <div className='block-shadow container mx-auto flex flex-col items-center justify-center rounded-lg border-2 p-4 md:flex-row'>
+        <div className='block-shadow container mx-auto flex flex-col items-center justify-evenly space-y-6 rounded-lg border-2 p-4 md:flex-row'>
           <div className='basis-5/12 text-center md:text-left'>
             <Heading type='h4' fontFamily='font-mono'>
               <Highlight variant='inverse'>my tool kit.</Highlight>
