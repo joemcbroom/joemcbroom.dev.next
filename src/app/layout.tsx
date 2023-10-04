@@ -2,6 +2,8 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import Nav from '@/_components/nav/NavBar';
+import Providers from '@/providers';
+import { ServerThemeProvider } from 'next-themes';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -16,13 +18,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang='en' className=''>
-      <body
-        className={`${inter.className} relative bg-neutral-50 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-50`}
-      >
-        <Nav />
-        <main className='mt-6 md:mt-12'>{children}</main>
-      </body>
-    </html>
+    <ServerThemeProvider attribute='class'>
+      <html lang='en' className=''>
+        <body
+          className={`${inter.className} relative bg-neutral-50 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-50`}
+        >
+          <Providers>
+            <Nav />
+            <main className='mt-6 md:mt-12'>{children}</main>
+          </Providers>
+        </body>
+      </html>
+    </ServerThemeProvider>
   );
 }
