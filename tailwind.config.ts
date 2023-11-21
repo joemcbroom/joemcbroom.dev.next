@@ -1,5 +1,14 @@
 import type { Config } from 'tailwindcss';
 import defaultTheme from 'tailwindcss/defaultTheme';
+import plugin from 'tailwindcss/plugin';
+
+const textWrap = ({ addUtilities }: { addUtilities: any }) => {
+  addUtilities({
+    '.text-balance': {
+      'text-wrap': 'balance',
+    },
+  });
+};
 
 const config: Config = {
   darkMode: 'class',
@@ -11,7 +20,7 @@ const config: Config = {
   corePlugins: {
     fontSize: false,
   },
-  plugins: [require('tailwindcss-fluid-type')],
+  plugins: [plugin(textWrap), require('tailwindcss-fluid-type')],
   theme: {
     extend: {
       fontFamily: {

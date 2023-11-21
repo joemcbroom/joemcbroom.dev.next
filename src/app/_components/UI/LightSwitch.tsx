@@ -40,7 +40,6 @@ const LightSwitch: React.FC<{ isDark: boolean; toggleTheme: () => void }> = ({
           if (!lottieRef.current) return;
           const { duration, durationInMs } = getDurations(lottieRef);
           if (!isDark) lottieRef.current.goToAndStop(duration - 1, true);
-          console.log(duration, durationInMs);
           setTimeout(() => setShowSwitch(true), durationInMs * 1000);
         }}
       />

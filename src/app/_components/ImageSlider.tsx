@@ -1,4 +1,7 @@
+'use client';
 import Image from 'next/image';
+import { faker } from '@faker-js/faker';
+import { useEffect, useMemo, useState } from 'react';
 
 type Image = {
   url: string;
@@ -6,97 +9,82 @@ type Image = {
   caption: React.ReactNode | string;
 };
 interface ImageSliderProps {
-  images?: Image[];
+  serverImages?: Image[];
 }
 
-// https://via.assets.so/album.png?id={index}&w=650&h=490
-// 15 example images
-const DEFAULT_IMAGES = [
-  {
-    url: 'https://via.assets.so/album.png?id=1&w=650&h=490',
-    alt: 'Example Image One',
-    caption: 'Example Image One',
-  },
-  {
-    url: 'https://via.assets.so/album.png?id=2&w=650&h=490',
-    alt: 'Example Image Two',
-    caption: 'Example Image Two',
-  },
-  {
-    url: 'https://via.assets.so/album.png?id=3&w=650&h=490',
-    alt: 'Example Image Three',
-    caption: 'Example Image Three',
-  },
-  {
-    url: 'https://via.assets.so/album.png?id=4&w=650&h=490',
-    alt: 'Example Image Four',
-    caption: 'Example Image Four',
-  },
-  {
-    url: 'https://via.assets.so/album.png?id=5&w=650&h=490',
-    alt: 'Example Image Five',
-    caption: 'Example Image Five',
-  },
-  {
-    url: 'https://via.assets.so/album.png?id=6&w=650&h=490',
-    alt: 'Example Image Six',
-    caption: 'Example Image Six',
-  },
-  {
-    url: 'https://via.assets.so/album.png?id=7&w=650&h=490',
-    alt: 'Example Image Seven',
-    caption: 'Example Image Seven',
-  },
-  {
-    url: 'https://via.assets.so/album.png?id=8&w=650&h=490',
-    alt: 'Example Image Eight',
-    caption: 'Example Image Eight',
-  },
-  {
-    url: 'https://via.assets.so/album.png?id=9&w=650&h=490',
-    alt: 'Example Image Nine',
-    caption: 'Example Image Nine',
-  },
-  {
-    url: 'https://via.assets.so/album.png?id=10&w=650&h=490',
-    alt: 'Example Image Ten',
-    caption: 'Example Image Ten',
-  },
-  {
-    url: 'https://via.assets.so/album.png?id=11&w=650&h=490',
-    alt: 'Example Image Eleven',
-    caption: 'Example Image Eleven',
-  },
-  {
-    url: 'https://via.assets.so/album.png?id=12&w=650&h=490',
-    alt: 'Example Image Twelve',
-    caption: 'Example Image Twelve',
-  },
-  {
-    url: 'https://via.assets.so/album.png?id=13&w=650&h=490',
-    alt: 'Example Image Thirteen',
-    caption: 'Example Image Thirteen',
-  },
-  {
-    url: 'https://via.assets.so/album.png?id=14&w=650&h=490',
-    alt: 'Example Image Fourteen',
-    caption: 'Example Image Fourteen',
-  },
-  {
-    url: 'https://via.assets.so/album.png?id=15&w=650&h=490',
-    alt: 'Example Image Fifteen',
-    caption: 'Example Image Fifteen',
-  },
-];
-const ImageSlider: React.FC<ImageSliderProps> = ({
-  images = DEFAULT_IMAGES,
-}) => {
+const ImageSlider: React.FC<ImageSliderProps> = ({ serverImages = [] }) => {
+  const [images, setImages] = useState<Image[]>([]);
+  const [activeSlide, setActiveSlide] = useState(0);
+
+  const defaultImages = useMemo(() => {
+    return [...Array(15)].map((_, index) => ({
+      url: faker.image.urlPicsumPhotos({
+        width: 650,
+        height: 490,
+      }),
+      alt: '',
+      caption: faker.music.songName(),
+    }));
+  }, []);
+
+  useEffect(() => {
+    if (serverImages.length) {
+      setImages(serverImages);
+      return;
+    }
+    setImages(defaultImages);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // useEffect(() => {
+  //   const slide = document.getElementById(`slide-${activeSlide}`);
+  //   if (!slide) return;
+  //   slide.scrollIntoView({
+  //     behavior: 'smooth',
+  //     block: 'center',
+  //     inline: 'center',
+  //   });
+  // }, [activeSlide]);
+
+  const scrollToSlide = (index: number) => {
+    const slide = document.getElementById(`slide-${index}`);
+    if (!slide) return;
+    slide.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+      inline: 'center',
+    });
+  };
+
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const scrollLeft = e.currentTarget.scrollLeft;
+    const scrollWidth = e.currentTarget.scrollWidth;
+    const clientWidth = e.currentTarget.clientWidth;
+    const scrollPosition = scrollLeft / (scrollWidth - clientWidth);
+    const activeSlide = Math.round(scrollPosition * (images.length - 1));
+    setActiveSlide(activeSlide);
+  };
+
+  if (!images.length) return null;
+
+  const colors = [
+    'bg-red-500',
+    'bg-orange-500',
+    'bg-yellow-500',
+    'bg-green-500',
+    'bg-blue-500',
+    'bg-indigo-500',
+    'bg-violet-500',
+  ];
+
   return (
     <div className='relative'>
-      <section className='gallery w-screen snap-x snap-mandatory overflow-x-scroll'>
+      <section
+        className='gallery w-screen snap-x snap-mandatory overflow-x-scroll'
+        onScroll={handleScroll}
+      >
         <ul className='m-0 flex w-fit list-none gap-3'>
           {images.map((image, index) => (
-            <li className='snap-center' key={image.url}>
+            <li className='snap-center' key={image.url} id={`slide-${index}`}>
               <figure className='w-96 text-center'>
                 <Image
                   src={image.url}
@@ -104,6 +92,12 @@ const ImageSlider: React.FC<ImageSliderProps> = ({
                   width={650}
                   height={490}
                   className='slider-image relative'
+                  placeholder='blur'
+                  blurDataURL={faker.image.dataUri({
+                    width: 20,
+                    height: 30,
+                    type: 'svg-base64',
+                  })}
                   style={{
                     zIndex: images.length - index,
                   }}
@@ -116,6 +110,19 @@ const ImageSlider: React.FC<ImageSliderProps> = ({
           ))}
         </ul>
       </section>
+      <div className='absolute bottom-0 left-0 right-0 flex justify-center gap-2'>
+        {images.map((_, index) => (
+          <button
+            key={index}
+            className={`h-4 w-4 rounded-full border-2 border-gray-300 ${
+              index === activeSlide
+                ? colors[index % colors.length]
+                : 'bg-gray-300'
+            }`}
+            onClick={() => scrollToSlide(index)}
+          />
+        ))}
+      </div>
     </div>
   );
 };
