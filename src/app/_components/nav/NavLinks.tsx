@@ -38,7 +38,7 @@ const NavLinks = () => {
           return (
             <Fragment key={name}>
               <span
-                className={`relative flex flex-col items-center justify-center transition-colors md:grid md:h-full md:w-1/3 md:place-items-center md:text-center ${
+                className={`druation relative flex flex-col items-center justify-center transition-colors duration-75 md:grid md:h-full md:w-1/3 md:place-items-center md:text-center ${
                   isActive ? 'text-sky-500' : ''
                 }`}
                 key={name}

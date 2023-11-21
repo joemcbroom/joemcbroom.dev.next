@@ -19,13 +19,13 @@ export default function RootLayout({
 }) {
   return (
     <ServerThemeProvider attribute='class'>
-      <html lang='en' className=''>
+      <html lang='en' className='h-screen transition-colors duration-75'>
         <body
-          className={`${inter.className} relative bg-neutral-50 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-50`}
+          className={`${inter.className} relative flex h-full flex-col bg-neutral-50 text-neutral-800 transition-colors duration-75 dark:bg-neutral-800 dark:text-neutral-50`}
         >
           <Providers>
             <Nav />
-            <main className='mt-6 md:mt-12'>{children}</main>
+            <main className='h-full'>{children}</main>
           </Providers>
         </body>
       </html>
