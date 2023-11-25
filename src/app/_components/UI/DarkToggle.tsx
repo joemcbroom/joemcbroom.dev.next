@@ -1,8 +1,6 @@
 'use client';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
-import { Switch } from '@headlessui/react';
-import Lottie, { LottieRef, useLottie } from 'lottie-react';
 import LightSwitch from './LightSwitch';
 
 const DarkToggle = () => {
@@ -24,23 +22,7 @@ const DarkToggle = () => {
 
   if (isDark === null) return null;
 
-  return (
-    <LightSwitch isDark={isDark} toggleTheme={toggleTheme} />
-    // <Switch
-    //   checked={isDark}
-    //   onChange={toggleTheme}
-    //   className={`relative md:absolute md:-right-24`}
-    // >
-    //   {View}
-    //   {/* <span
-    //     className={`${
-    //       isDark ? 'translate-x-0' : 'translate-x-full'
-    //     } inline-block h-6 w-6 transform overflow-hidden rounded-full bg-white transition`}
-    //   >
-
-    //   </span> */}
-    // </Switch>
-  );
+  return <LightSwitch isDark={isDark} toggleTheme={toggleTheme} />;
 };
 
 export default DarkToggle;

@@ -1,16 +1,16 @@
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/20/solid';
 import Link from 'next/link';
 import NavLinks from './NavLinks';
+import LinkHighlight from '../ui/LinkHighlight';
 
 const Title = ({ isMobile }: { isMobile?: boolean }) => {
   return (
     <Link
       href='/'
-      className={`${
-        isMobile ? '' : ''
-      } font-semibold uppercase tracking-wider text-inherit text-lg`}
+      className='group relative font-semibold uppercase tracking-wider text-inherit text-lg'
     >
       Joe McBroom
+      {/* <LinkHighlight /> */}
     </Link>
   );
 };
@@ -18,7 +18,7 @@ const Title = ({ isMobile }: { isMobile?: boolean }) => {
 const Nav = () => {
   return (
     <>
-      <div className='sticky top-0 z-50 flex min-h-[4rem] w-full items-center justify-between border-b px-4 py-2 text-sky-500 backdrop-blur-md md:hidden'>
+      <div className='sticky top-0 z-50 flex min-h-[4rem] w-full items-center justify-between border-b px-4 py-2 backdrop-blur-md md:hidden'>
         <Title isMobile />
         <input
           type='checkbox'
@@ -42,9 +42,11 @@ const Nav = () => {
           <NavLinks />
         </div>
       </div>
-      <div className='sticky inset-0 z-40 mx-auto hidden min-h-[4rem] w-full border-b backdrop-blur-md md:flex md:items-center md:justify-between md:px-36 md:py-2'>
-        <Title />
-        <NavLinks />
+      <div className='sticky top-0 z-40 flex min-h-[4rem] w-full flex-col items-center justify-center border-b backdrop-blur-md'>
+        <div className='inset-0 z-40 mx-auto hidden w-full max-w-5xl md:flex md:items-center md:justify-between'>
+          <Title />
+          <NavLinks />
+        </div>
       </div>
     </>
   );

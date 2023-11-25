@@ -1,6 +1,13 @@
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/_components/ui/tooltip';
 import Lottie, { LottieRefCurrentProps } from 'lottie-react';
-import { RefObject, useEffect, useRef, useState } from 'react';
-import lightSwitch from '@/_assets/animation/light-switch.json';
+import { useRef, useState } from 'react';
+import lightBulb from '@/_assets/animation/lightbulb.json';
+import { cn } from '@/_lib/utils';
 
 const LightSwitch: React.FC<{ isDark: boolean; toggleTheme: () => void }> = ({
   isDark,
@@ -9,41 +16,59 @@ const LightSwitch: React.FC<{ isDark: boolean; toggleTheme: () => void }> = ({
   const lottieRef = useRef<LottieRefCurrentProps>(null);
   const [showSwitch, setShowSwitch] = useState(false);
 
-  const getDurations = (lottieRef: RefObject<LottieRefCurrentProps>) => {
-    return {
-      duration: lottieRef.current!.getDuration(true)!,
-      durationInMs: lottieRef.current!.getDuration(false)!,
-    };
+  const startingFrame = 42;
+  const endingFrame = 120;
+
+  const handleClick = () => {
+    if (!lottieRef.current) return;
+    lottieRef.current.setSpeed(2);
+    if (isDark) {
+      lottieRef.current.playSegments([startingFrame, endingFrame], true);
+    } else {
+      lottieRef.current.playSegments([endingFrame, startingFrame], true);
+    }
+    setTimeout(
+      () => {
+        toggleTheme();
+      },
+      isDark ? 290 : 490,
+    );
   };
 
-  useEffect(() => {
-    if (!lottieRef.current) return;
-    const { duration } = getDurations(lottieRef);
-    lottieRef.current.setDirection(!isDark ? 1 : -1);
-    lottieRef.current.goToAndPlay(!isDark ? 0 : duration - 1, true);
-  }, [isDark]); // eslint-disable-line react-hooks/exhaustive-deps
-
   return (
-    <span
-      className={`relative rotate-90 cursor-pointer transition-opacity md:absolute md:-right-16 md:-top-6  ${
-        showSwitch ? 'opacity-100' : 'opacity-0'
-      }`}
-      onClick={toggleTheme}
-    >
-      <Lottie
-        animationData={lightSwitch}
-        autoplay={false}
-        loop={false}
-        lottieRef={lottieRef}
-        className='w-8'
-        onDOMLoaded={() => {
-          if (!lottieRef.current) return;
-          const { duration, durationInMs } = getDurations(lottieRef);
-          if (!isDark) lottieRef.current.goToAndStop(duration - 1, true);
-          setTimeout(() => setShowSwitch(true), durationInMs * 1000);
-        }}
-      />
-    </span>
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <span
+            className={cn(
+              `relative cursor-pointer transition-opacity md:absolute md:-right-10 md:-top-7`,
+              showSwitch ? 'opacity-100' : 'opacity-0',
+            )}
+            onClick={handleClick}
+          >
+            <Lottie
+              animationData={lightBulb}
+              autoplay={false}
+              loop={false}
+              lottieRef={lottieRef}
+              className='w-20'
+              onDOMLoaded={() => {
+                if (!lottieRef.current) return;
+                if (isDark) {
+                  lottieRef.current.goToAndStop(startingFrame, true);
+                } else {
+                  lottieRef.current.goToAndStop(endingFrame, true);
+                }
+                setTimeout(() => setShowSwitch(true), 500);
+              }}
+            />
+          </span>
+        </TooltipTrigger>
+        <TooltipContent className='pointer-events-none'>
+          <span className='text-sm'>Toggle Theme</span>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 };
 

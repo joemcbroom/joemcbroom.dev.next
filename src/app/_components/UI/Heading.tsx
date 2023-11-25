@@ -5,6 +5,8 @@
  * <Heading type="h1">Heading 1</Heading>
  */
 
+import { cn } from '@/_lib/utils';
+
 interface HeadingProps {
   type: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
   fontFamily?: 'font-sans' | 'font-serif' | 'font-mono';
@@ -26,7 +28,11 @@ const Heading: React.FC<HeadingProps> = ({
   const Tag = type;
   return (
     <Tag
-      className={`text-balance font-medium tracking-tighter ${classes[type]} ${fontFamily}`}
+      className={cn(
+        'text-balance font-medium tracking-tighter',
+        classes[type],
+        fontFamily,
+      )}
     >
       {children}
     </Tag>

@@ -2,6 +2,7 @@
 import Image from 'next/image';
 import { faker } from '@faker-js/faker';
 import { useEffect, useMemo, useState } from 'react';
+import { cn } from '@/_lib/utils';
 
 type Image = {
   url: string;
@@ -34,16 +35,6 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ serverImages = [] }) => {
     }
     setImages(defaultImages);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  // useEffect(() => {
-  //   const slide = document.getElementById(`slide-${activeSlide}`);
-  //   if (!slide) return;
-  //   slide.scrollIntoView({
-  //     behavior: 'smooth',
-  //     block: 'center',
-  //     inline: 'center',
-  //   });
-  // }, [activeSlide]);
 
   const scrollToSlide = (index: number) => {
     const slide = document.getElementById(`slide-${index}`);
@@ -85,7 +76,10 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ serverImages = [] }) => {
         <ul className='m-0 flex w-fit list-none gap-3'>
           {images.map((image, index) => (
             <li className='snap-center' key={image.url} id={`slide-${index}`}>
-              <figure className='w-96 text-center'>
+              <figure
+                className='w-96 text-center'
+                onClick={() => scrollToSlide(index)}
+              >
                 <Image
                   src={image.url}
                   alt={image.alt}
@@ -114,11 +108,10 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ serverImages = [] }) => {
         {images.map((_, index) => (
           <button
             key={index}
-            className={`h-4 w-4 rounded-full border-2 border-gray-300 ${
-              index === activeSlide
-                ? colors[index % colors.length]
-                : 'bg-gray-300'
-            }`}
+            className={cn(
+              `h-4 w-4 rounded-full border-2 border-gray-300 bg-gray-300`,
+              index === activeSlide && colors[index % colors.length],
+            )}
             onClick={() => scrollToSlide(index)}
           />
         ))}
