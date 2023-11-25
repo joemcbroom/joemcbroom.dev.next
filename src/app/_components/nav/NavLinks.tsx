@@ -2,6 +2,9 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Fragment } from 'react';
+import DarkToggle from '@/_components/ui/DarkToggle';
+import { cn } from '@/_lib/utils';
+import LinkHighlight from '../ui/LinkHighlight';
 
 const NavLinks = () => {
   const pathname = usePathname();
@@ -28,31 +31,24 @@ const NavLinks = () => {
   ];
 
   return (
-    <ul className='relative flex flex-col items-center space-y-4 md:w-[15rem] md:flex-row md:gap-4 md:space-y-0'>
-      {navLinks.map(({ name, path }) => {
-        const isActive = pathname === path;
-        const { left } = navLinks.find((link) => link.path === pathname) || {};
-        return (
-          <Fragment key={name}>
-            <span
-              className={`relative flex flex-col items-center justify-center transition-colors md:grid md:h-full md:w-1/3 md:place-items-center md:text-center ${
-                isActive ? 'text-sky-500' : ''
-              }`}
-              key={name}
-              onClick={onClick}
-            >
-              <Link href={path}>{name}</Link>
-            </span>
-            <span
-              className={`absolute ${left} top-full hidden h-2 w-2 rounded-full transition-all md:block ${
-                isActive ? 'bg-sky-400' : 'bg-transparent'
-              }`}
-            />
-          </Fragment>
-        );
-      })}
-      {/* <DarkToggle /> */}
-    </ul>
+    <>
+      <ul className='relative flex flex-col items-center space-y-4 md:w-[15rem] md:flex-row md:gap-4 md:space-y-0 md:pr-10'>
+        {navLinks.map(({ name, path }) => {
+          const isActive = pathname === path;
+          return (
+            <Fragment key={name}>
+              <LinkHighlight
+                isActive={isActive}
+                onClick={onClick}
+                path={path}
+                name={name}
+              />
+            </Fragment>
+          );
+        })}
+        <DarkToggle />
+      </ul>
+    </>
   );
 };
 
