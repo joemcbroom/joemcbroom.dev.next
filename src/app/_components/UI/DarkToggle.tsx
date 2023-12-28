@@ -1,7 +1,8 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense, lazy } from 'react';
 import { useTheme } from 'next-themes';
-import LightSwitch from './LightSwitch';
+const LightSwitch = lazy(() => import('./LightSwitch'));
+import LoadingSpinner from './LoadingSpinner';
 
 const DarkToggle = () => {
   const { theme, setTheme } = useTheme();
@@ -22,7 +23,15 @@ const DarkToggle = () => {
 
   if (isDark === null) return null;
 
-  return <LightSwitch isDark={isDark} toggleTheme={toggleTheme} />;
+  return (
+    <Suspense
+      fallback={
+        <span className='relative grid h-20 w-20 place-items-center md:absolute md:-right-10 md:-top-7'></span>
+      }
+    >
+      <LightSwitch isDark={isDark} toggleTheme={toggleTheme} />
+    </Suspense>
+  );
 };
 
 export default DarkToggle;

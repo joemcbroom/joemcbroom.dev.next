@@ -80,13 +80,17 @@
   box-shadow: 1em 1em 0 #0284c7;
 }
 
+.block-shadow:hover {
+  box-shadow: 0 0 0 #0284c7;
+  transform: translate(1em, 1em);
+}
+
 :root {
   --image-size: clamp(200px, 15vw + 1rem, 650px);
 }
 
 .gallery {
   padding-inline: calc(50vw - (var(--image-size) * 0.5));
-  padding-block: 4lh;
 }
 
 .gallery::-webkit-scrollbar {
@@ -99,40 +103,16 @@ li {
   view-timeline-axis: inline;
 }
 
-/* li:nth-of-type(1) {
-  --crop: 40%;
-}
-
-li:nth-of-type(2) {
-  --crop: 0%;
-}
-
-li:nth-of-type(3) {
-  --crop: 10%;
-}
-
-li:nth-of-type(4) {
-  --crop: 16%;
-}
-
-li:nth-of-type(5) {
-  --crop: 20%;
-}
-
-li:nth-of-type(6) {
-  --crop: 24%;
-}
-
-li:nth-of-type(7) {
-  --crop: 30%;
-} */
-
 .slider-image {
-  /* width: var(--image-size); */
   transform-origin: 0 50%;
   opacity: var(--starting-opacity, 1);
   scale: var(--starting-scale, 1);
   translate: var(--starting-x, 0) 0;
+}
+
+.expand-trigger {
+  opacity: 0;
+  scale: var(--starting-scale, 1);
 }
 
 @media screen and (max-width: 768px) {
@@ -149,6 +129,15 @@ li:nth-of-type(7) {
     animation: highlight both linear;
     animation-timeline: view(inline);
     animation-range: cover 0% cover 50%;
+  }
+
+  .expand-trigger {
+    --starting-scale: 0;
+    --starting-opacity: 0;
+    --starting-x: -40%;
+    animation: highlight both linear;
+    animation-timeline: view(inline);
+    animation-range: cover 35% cover 40%;
   }
 
   @keyframes highlight {

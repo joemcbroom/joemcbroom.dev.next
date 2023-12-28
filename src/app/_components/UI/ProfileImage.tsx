@@ -1,24 +1,29 @@
 'use client';
 
 import profileImage from '@/_assets/img/headshot.png';
+import { cn } from '@/_lib/utils';
 import Image from 'next/image';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const ProfileImage = () => {
-  const image = useRef<HTMLImageElement>(null);
-  // change from `grayscale` to `grayscale-0` on mount
+  const [isServer, setIsServer] = useState(true);
+
   useEffect(() => {
-    image.current?.classList.remove('grayscale');
-    image.current?.classList.add('grayscale-0');
+    setIsServer(false);
   }, []);
 
   return (
-    <figure className='profile-image block-shadow relative my-12 rounded-lg rounded-t-full border-2 dark:border-neutral-700 '>
+    <figure
+      className={cn(
+        isServer && 'grayscale',
+        'block-shadow relative my-12 rounded-lg rounded-t-full border-2 transition-all duration-1000 ease-in-out dark:border-neutral-700',
+      )}
+    >
       <Image
-        ref={image}
+        // ref={image}
         src={profileImage}
         priority
-        className='headshot rounded-lg rounded-t-full grayscale transition-all delay-1000 duration-1000 ease-in-out hover:grayscale-0'
+        className='rounded-lg rounded-t-full'
         alt='Picture of the Joe McBroom'
         placeholder='blur'
       />

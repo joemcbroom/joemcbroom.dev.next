@@ -1,7 +1,6 @@
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/20/solid';
 import Link from 'next/link';
 import NavLinks from './NavLinks';
-import LinkHighlight from '../ui/LinkHighlight';
 
 const Title = ({ isMobile }: { isMobile?: boolean }) => {
   return (
@@ -10,7 +9,6 @@ const Title = ({ isMobile }: { isMobile?: boolean }) => {
       className='group relative font-semibold uppercase tracking-wider text-inherit text-lg'
     >
       Joe McBroom
-      {/* <LinkHighlight /> */}
     </Link>
   );
 };

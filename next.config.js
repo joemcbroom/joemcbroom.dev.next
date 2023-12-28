@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   images: {
     dangerouslyAllowSVG: true,
-    domains: ['images.placeholders.dev', 'via.assets.so', 'loremflickr.com', 'picsum.photos'],
+    domains: ['images.placeholders.dev', 'via.assets.so', 'loremflickr.com', 'picsum.photos', 'www.themoviedb.org'],
   },
 }
 

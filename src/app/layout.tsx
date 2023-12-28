@@ -1,3 +1,4 @@
+// 'use client';
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
@@ -19,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <ServerThemeProvider attribute='class'>
-      <html lang='en' className='h-screen transition-colors duration-75'>
+      <html lang='en' className='h-svh transition-colors duration-75'>
         <body
           className={`${inter.className} relative flex h-full flex-col bg-neutral-50 text-neutral-800 transition-colors duration-75 dark:bg-neutral-800 dark:text-neutral-50`}
         >

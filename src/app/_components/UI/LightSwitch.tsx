@@ -1,3 +1,4 @@
+'use client';
 import {
   Tooltip,
   TooltipContent,
@@ -5,7 +6,7 @@ import {
   TooltipTrigger,
 } from '@/_components/ui/tooltip';
 import Lottie, { LottieRefCurrentProps } from 'lottie-react';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import lightBulb from '@/_assets/animation/lightbulb.json';
 import { cn } from '@/_lib/utils';
 

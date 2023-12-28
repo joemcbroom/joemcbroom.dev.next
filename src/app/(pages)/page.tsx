@@ -8,7 +8,7 @@ import Link from 'next/link';
 export default function HomePage() {
   return (
     <>
-      <section className='mx-auto flex max-w-5xl flex-col md:grid md:grid-cols-2'>
+      <section className='mx-auto flex max-w-5xl flex-col px-6 md:grid md:grid-cols-2 md:px-0'>
         <div className='mx-auto flex flex-col justify-center gap-4 text-left'>
           <Heading type='h1' fontFamily='font-mono'>
             <Highlight>Software</Highlight> engineer
@@ -29,7 +29,7 @@ export default function HomePage() {
             </span>
           </p>
         </div>
-        <div className='flex w-full items-end justify-end'>
+        <div className='mx-auto flex w-3/4 items-end justify-end md:w-full'>
           <ProfileImage />
         </div>
       </section>
