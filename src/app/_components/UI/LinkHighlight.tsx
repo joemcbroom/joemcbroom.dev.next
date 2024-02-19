@@ -20,7 +20,7 @@ const LinkHighlight = ({
 
   return (
     <span
-      className='relative flex flex-col items-center justify-center transition-colors duration-75 md:grid md:h-full md:w-1/3 md:place-items-center md:text-center'
+      className=' relative flex flex-col items-center justify-center whitespace-nowrap transition-colors duration-75 md:grid md:h-full md:w-1/3 md:place-items-center md:text-center'
       onClick={onClick}
       onMouseEnter={(e) => {
         // check if mouse entered from left or right

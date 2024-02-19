@@ -5,6 +5,7 @@ export type SliderImage = {
   id: number;
   title: string;
   description?: string;
+  overlayContent?: React.ReactNode;
 };
 
 export type Movie = {

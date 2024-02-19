@@ -110,7 +110,7 @@ li {
   translate: var(--starting-x, 0) 0;
 }
 
-.expand-trigger {
+.slider-image-content {
   opacity: 0;
   scale: var(--starting-scale, 1);
 }
@@ -131,13 +131,13 @@ li {
     animation-range: cover 0% cover 50%;
   }
 
-  .expand-trigger {
+  .slider-image-content {
     --starting-scale: 0;
     --starting-opacity: 0;
     --starting-x: -40%;
     animation: highlight both linear;
     animation-timeline: view(inline);
-    animation-range: cover 35% cover 40%;
+    animation-range: cover 20% cover 40%;
   }
 
   @keyframes highlight {

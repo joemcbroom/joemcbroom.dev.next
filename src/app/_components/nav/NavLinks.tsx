@@ -28,11 +28,16 @@ const NavLinks = () => {
       path: '/resume',
       left: 'left-[12.65rem]',
     },
+    {
+      name: 'Movie Search',
+      path: '/movie-search',
+      left: 'left-[18rem]',
+    },
   ];
 
   return (
     <>
-      <ul className='relative flex flex-col items-center space-y-4 md:w-[15rem] md:flex-row md:gap-4 md:space-y-0 md:pr-10'>
+      <ul className='relative flex flex-col items-center space-y-4 md:w-[20rem] md:flex-row md:gap-4 md:space-y-0 md:pr-10'>
         {navLinks.map(({ name, path }) => {
           const isActive = pathname === path;
           return (

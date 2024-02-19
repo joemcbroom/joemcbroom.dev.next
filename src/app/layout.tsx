@@ -26,7 +26,7 @@ export default function RootLayout({
         >
           <Providers>
             <Nav />
-            <main className='h-full'>{children}</main>
+            <main className='mx-auto h-full max-w-screen-2xl'>{children}</main>
           </Providers>
         </body>
       </html>

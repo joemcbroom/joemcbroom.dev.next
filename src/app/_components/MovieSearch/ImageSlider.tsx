@@ -1,6 +1,6 @@
 'use client';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { cn } from '@/_lib/utils';
 import type { SliderImage } from '@/_lib/types';
 import {
@@ -8,7 +8,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTrigger,
-} from './ui/dialog';
+} from '../ui/dialog';
 import { Search } from 'lucide-react';
 
 interface ImageSliderProps {
@@ -20,6 +20,9 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ images = [] }) => {
 
   // if images changes, reset activeSlide to 0 and scroll to first slide
   useEffect(() => {
+    // Don't do this on the first render
+    if (activeSlide === 0) return;
+
     setActiveSlide(0);
     scrollToSlide(0);
   }, [images]);
@@ -29,7 +32,6 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ images = [] }) => {
     if (!slide) return;
     slide.scrollIntoView({
       behavior: 'smooth',
-      block: 'center',
       inline: 'center',
     });
   };
@@ -68,23 +70,21 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ images = [] }) => {
               key={'slide-' + image.url}
               id={`slide-${index}`}
             >
-              <figure
-                className='relative w-72 text-center md:w-96'
-                onClick={() => scrollToSlide(index)}
-              >
+              <figure className='relative w-72 text-center md:w-96'>
                 <Image
                   src={image.url}
                   alt={image.alt}
                   width={384}
                   height={576}
-                  className='slider-image relative'
+                  className='slider-image relative rounded-lg shadow-lg'
                   key={'slide-' + image.id}
                   style={{
                     zIndex: images.length - index,
                   }}
+                  onClick={() => scrollToSlide(index)}
                 />
                 <Dialog>
-                  <DialogTrigger className='expand-trigger absolute bottom-6 left-1/2 z-50 -translate-x-1/2 translate-y-1/2 transform rounded border px-2 py-1'>
+                  <DialogTrigger className='slider-image-content absolute bottom-6 left-1/2 z-50 -translate-x-1/2 translate-y-1/2 transform rounded border bg-zinc-800 bg-opacity-70 px-2 py-1'>
                     <Search className='h-6 w-6 text-white' />
                   </DialogTrigger>
                   <DialogContent>
@@ -94,6 +94,7 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ images = [] }) => {
                     )}
                   </DialogContent>
                 </Dialog>
+                {image.overlayContent && <>{image.overlayContent}</>}
                 <figcaption className='my-6 w-full p-4 text-center'>
                   {image.caption}
                 </figcaption>
@@ -107,7 +108,7 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ images = [] }) => {
           <button
             key={'button-' + image.url}
             className={cn(
-              `size-2 md:size-4 rounded-full border-2 border-gray-300 bg-gray-300`,
+              `size-2 rounded-full border-2 border-gray-300 bg-gray-300 md:size-4`,
               index === activeSlide && colors[index % colors.length],
             )}
             onClick={() => scrollToSlide(index)}
